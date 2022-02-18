@@ -1,0 +1,48 @@
+#include "msp.h"
+#define TIME 375000
+volatile int i = 10;
+int main(void) {
+    WDT_A->CTL = WDT_A_CTL_PW |             // Stop WDT
+            WDT_A_CTL_HOLD;
+
+    // Configure GPIO
+    P1->DIR |= BIT0;
+    P1->OUT |= BIT0;
+
+    TIMER_A0->CCTL[0] = TIMER_A_CCTLN_CCIE; // TACCR0 interrupt enabled
+    TIMER_A0->CCR[0] = TIME;
+    TIMER_A0->CTL = TIMER_A_CTL_SSEL__SMCLK | TIMER_A_CTL_ID_2 |// SMCLK, continuous mode
+            TIMER_A_CTL_MC__CONTINUOUS;
+
+    SCB->SCR |= SCB_SCR_SLEEPONEXIT_Msk;    // Enable sleep on exit from ISR
+
+    // Ensures SLEEPONEXIT takes effect immediately
+    __DSB();
+
+    // Enable global interrupt
+    __enable_irq();
+
+    NVIC->ISER[0] = 1 << ((TA0_0_IRQn) & 31);
+
+    while (1)
+    {
+        __sleep();
+
+        __no_operation();                   // For debugger
+    }
+}
+
+// Timer A0 interrupt service routine
+
+void TA0_0_IRQHandler(void) {
+    //check
+    TIMER_A0->CCTL[0] &= ~TIMER_A_CCTLN_CCIFG;
+    if(i == 0){
+        P1->OUT ^= BIT0;
+        i = 30;
+    }
+    else{
+        i--;
+    }
+    TIMER_A0->CCR[0] += TIME;              // Add Offset to TACCR0
+}
