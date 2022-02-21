@@ -1,0 +1,15 @@
+/*
+ * timer.h
+ *
+ *  Created on: Feb 20, 2022
+ *      Author: Sricharan Kidambi
+ */
+
+#ifndef TIMER_H_
+#define TIMER_H_
+
+#include "msp.h"
+
+void init_timer0(void);
+
+#endif /* TIMER_H_ */

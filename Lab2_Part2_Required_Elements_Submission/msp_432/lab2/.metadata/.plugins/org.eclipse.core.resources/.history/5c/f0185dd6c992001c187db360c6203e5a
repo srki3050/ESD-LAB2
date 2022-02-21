@@ -1,0 +1,16 @@
+/*
+ * gpio.c
+ *
+ *  Created on: Feb 20, 2022
+ *      Author: SK's Login
+ */
+
+#include "gpio.h"
+
+void init_gpio(void){
+    // Configure GPIO
+    P1->DIR |= BIT0;
+    P1->OUT |= BIT0;
+}
+
+

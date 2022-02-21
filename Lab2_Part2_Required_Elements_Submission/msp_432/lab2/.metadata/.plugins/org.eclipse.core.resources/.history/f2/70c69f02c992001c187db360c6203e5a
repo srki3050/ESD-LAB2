@@ -1,0 +1,41 @@
+#include "msp.h"
+#include "timer.h"
+#define TIME 20570
+#define LOOP 10
+volatile int i = LOOP;
+int main(void) {
+    WDT_A->CTL = WDT_A_CTL_PW |             // Stop WDT
+            WDT_A_CTL_HOLD;
+
+    init_ports();
+    init_timer0();
+    // Ensures SLEEPONEXIT takes effect immediately
+    __DSB();
+
+    // Enable global interrupt
+    __enable_irq();
+
+    NVIC->ISER[0] = 1 << ((TA0_0_IRQn) & 31);
+
+    while (1)
+    {
+        __sleep();
+
+        __no_operation();                   // For debugger
+    }
+}
+
+// Timer A0 interrupt service routine
+
+void TA0_0_IRQHandler(void) {
+    //check
+    TIMER_A0->CCTL[0] &= ~TIMER_A_CCTLN_CCIFG;
+    if(i == 0){
+        P1->OUT ^= BIT0;
+        i = LOOP;
+    }
+    else{
+        i--;
+    }
+    TIMER_A0->CCR[0] += TIME;              // Add Offset to TACCR0
+}

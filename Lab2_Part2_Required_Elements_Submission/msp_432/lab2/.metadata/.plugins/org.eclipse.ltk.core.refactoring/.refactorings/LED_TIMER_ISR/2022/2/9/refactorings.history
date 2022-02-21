@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;LED_TIMER_ISR/irq.c&apos; to &apos;irq.h&apos;" description="Rename resource &apos;irq.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="irq.c" name="irq.h" stamp="1645415550176" updateReferences="true"/>
+</session>

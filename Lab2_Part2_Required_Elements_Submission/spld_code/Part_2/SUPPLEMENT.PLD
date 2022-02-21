@@ -1,0 +1,22 @@
+Name     Supplement ;
+PartNo   00 ;
+Date     2/19/2022 ;
+Revision 01 ;
+Designer Engineer ;
+Company  University of Colorado ;
+Assembly None ;
+Location Boulder ;
+Device   g16v8a ;
+
+/* *************** INPUT PINS *********************/
+PIN 2    = A15                        ; /*                                 */ 
+PIN 7    = WR                        ; /*                                 */ 
+
+/* *************** OUTPUT PINS *********************/
+PIN 13    = C                        ; /*                                 */ 
+PIN 15    = CE			   ; /*				     */
+/* *************** LOGIC ***************************/
+C = !A15 & !WR;
+CE = A15;
+
+

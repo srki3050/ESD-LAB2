@@ -1,0 +1,17 @@
+/*
+ * irq.h
+ *
+ *  Created on: Feb 20, 2022
+ *      Author: SK's Login
+ */
+
+#ifndef IRQ_H_
+#define IRQ_H_
+
+#include "msp.h"
+#include "timer.h"
+
+void PORT1_IRQHandler(void);
+
+
+#endif /* IRQ_H_ */

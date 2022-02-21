@@ -1,0 +1,16 @@
+/*
+ * timer.h
+ *
+ *  Created on: Feb 20, 2022
+ *      Author: SK's Login
+ */
+
+#ifndef TIMER_H_
+#define TIMER_H_
+
+#include "msp.h"
+#define TIME 50000
+
+void timer_enable(void);
+
+#endif /* TIMER_H_ */

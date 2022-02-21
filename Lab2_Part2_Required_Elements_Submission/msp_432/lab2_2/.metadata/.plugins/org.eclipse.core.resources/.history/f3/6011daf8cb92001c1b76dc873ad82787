@@ -1,0 +1,19 @@
+/*
+ * gpio.h
+ *
+ *  Created on: Feb 20, 2022
+ *      Author: SK's Login
+ */
+
+#ifndef GPIO_H_
+#define GPIO_H_
+
+#include "msp.h"
+void watchdog_disable(void);
+void init_port1(void);
+void init_port2(void);
+void disable_rest(void);
+
+
+
+#endif /* GPIO_H_ */

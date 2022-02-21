@@ -1,0 +1,19 @@
+/*
+ * irq.h
+ *
+ *  Created on: Feb 20, 2022
+ *      Author: Sricharan Kidambi
+ */
+
+#ifndef IRQ_C_
+#define IRQ_C_
+
+#include "msp.h"
+#include "timer.h"
+#include "stdio.h"
+
+#define LOOP 10
+
+void TA0_0_IRQHandler(void);
+
+#endif /* IRQ_C_ */

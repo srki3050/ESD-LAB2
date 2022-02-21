@@ -1,0 +1,47 @@
+DUNFIELD 8051 ASSEMBLER: SUPPLE~1                                     PAGE: 1
+
+0000                         1    ORG 0000h
+0000  02 00 0E               2    LJMP BEGIN	;LJMP jumps to the next 16bit address
+000B                         3    ORG 000bh
+000B  02 00 32               4    LJMP ISR
+000E                         5  BEGIN:	
+000E  79 00                  6    MOV R1,#00H								; INitialize a register R1 to 00H to rollover until 7FH
+0010  7A 80                  7    MOV R2,#80H								; INitialize a register R2 to 80H to rollover until FFH
+0012  75 89 01               8    MOV TMOD,#01H								; Timer initialization module.
+0015  75 A8 82               9    MOV IE,#82H
+0018  78 0A                 10    MOV R0,#0AH
+001A  75 8C 73              11    MOV TH0,#73H
+001D  75 8A 97              12    MOV TL0,#97H
+0020  75 88 10              13    MOV TCON,#10H
+0023  80 00                 14    SJMP ENDLOOP
+0025                        15  ENDLOOP:
+0025  90 05 00              16    MOV DPTR,#500H							; Set a random address and feed in values on every call to this label.
+0028  E9                    17    MOV A,R1
+0029  F0                    18    MOVX @DPTR,A
+002A  09                    19    INC R1
+002B  B9 80 F7              20    CJNE R1,#80H,ENDLOOP
+002E  79 00                 21    MOV R1,#00H
+0030  80 F3                 22    SJMP ENDLOOP
+0032                        23  ISR:										
+0032  90 06 00              24    MOV DPTR,#600H							; Set a random address and feed in values on every call to the ISR
+0035  EA                    25    MOV A,R2
+0036  F0                    26    MOVX @DPTR,A
+0037  0A                    27    INC R2
+0038  BA 00 02              28    CJNE R2,#00H,I
+003B  7A 80                 29    MOV R2,#80H
+003D                        30  I:  
+003D  E8                    31    MOV A,R0									
+003E  94 01                 32    SUBB A,#01H
+0040  F8                    33    MOV R0,A
+0041  60 0A                 34    JZ LOGIC
+0043  75 8C 73              35    MOV TH0,#73H
+0046  75 8A 97              36    MOV TL0,#97H
+0049  75 88 10              37    MOV TCON,#10H
+004C  32                    38    RETI
+004D                        39  LOGIC:										
+004D  B2 90                 40    CPL P1.0									; Ensure that logic is handled on every R0 going to 0 and then restarting the timer system.
+004F  78 0A                 41    MOV R0,#0AH
+0051  75 8C 73              42    MOV TH0,#73H
+0054  75 8A 97              43    MOV TL0,#97H
+0057  75 88 10              44    MOV TCON,#10H
+005A  32                    45    RETI

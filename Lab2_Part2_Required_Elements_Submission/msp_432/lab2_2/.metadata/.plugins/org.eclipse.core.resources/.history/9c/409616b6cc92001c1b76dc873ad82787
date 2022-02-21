@@ -1,0 +1,15 @@
+/*
+ * Switch.h
+ *
+ *  Created on: Feb 20, 2022
+ *      Author: SK's Login
+ */
+
+#ifndef SWITCH_H_
+#define SWITCH_H_
+
+switch_init(void);
+
+
+
+#endif /* SWITCH_H_ */

@@ -1,0 +1,22 @@
+Name     SricharanLab2Part1 ;
+PartNo   00 ;
+Date     2/10/2022 ;
+Revision 01 ;
+Designer Engineer ;
+Company  University of Colorado ;
+Assembly None ;
+Location None ;
+Device   g16v8a ;
+
+/* *************** INPUT PINS *********************/
+PIN 2     =        A15                ; /*                                 */ 
+
+/* *************** OUTPUT PINS *********************/
+PIN 15    =        CE                 ; /*                                 */
+
+/* *************** LOGIC **************************/			
+
+CE	=	A15;
+
+
+

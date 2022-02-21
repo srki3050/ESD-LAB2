@@ -1,0 +1,31 @@
+DUNFIELD 8051 ASSEMBLER: LABPART                                      PAGE: 1
+
+0000                         1    ORG 0000h
+0000  02 00 0E               2    LJMP BEGIN	;LJMP jumps to the next 16bit address
+000B                         3    ORG 000bh
+000B  02 00 21               4    LJMP ISR
+000E                         5  BEGIN:	
+000E  75 89 01               6    MOV TMOD,#01H							; Start the timer in Continuous mode
+0011  75 A8 82               7    MOV IE,#82H							; Enable interrupts
+0014  78 0A                  8    MOV R0,#0AH							; Initial load value for 10 loops.
+0016  75 8C 73               9    MOV TH0,#73H							; Intiial timer values for 39ms
+0019  75 8A 97              10    MOV TL0,#97H		
+001C  75 88 10              11    MOV TCON,#10H							; start the timer
+001F                        12  ENDLOOP:
+001F  80 FE                 13    SJMP ENDLOOP							; Main loop
+0021                        14  ISR:
+0021  E8                    15    MOV A,R0								; HAndle the ISR on every timer overflow.
+0022  94 01                 16    SUBB A,#01H
+0024  F8                    17    MOV R0,A
+0025  60 0A                 18    JZ LOGIC								
+0027  75 8C 73              19    MOV TH0,#73H
+002A  75 8A 97              20    MOV TL0,#97H
+002D  75 88 10              21    MOV TCON,#10H
+0030  32                    22    RETI
+0031                        23  LOGIC:									
+0031  B2 90                 24    CPL P1.0								; Ensure that logic is handled on every R0 going to 0 and then restarting the timer system.
+0033  78 0A                 25    MOV R0,#0AH
+0035  75 8C 73              26    MOV TH0,#73H
+0038  75 8A 97              27    MOV TL0,#97H
+003B  75 88 10              28    MOV TCON,#10H
+003E  32                    29    RETI
